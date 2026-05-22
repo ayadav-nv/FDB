@@ -203,15 +203,6 @@
                     <p>De FD Business Agent is beschikbaar via de chatknop rechtsonder in uw scherm.</p>
                 </div>
 
-                <script type='text/javascript'>
-                    function initEmbeddedMessaging() {
-                        try {
-                            embeddedservice_bootstrap.settings.language = 'nl';
-                            embeddedservice_bootstrap.init('00Dbm00000jXRSX','FDG','https://ne1779133027314.my.site.com/ESWFDG1779356092251',{scrt2URL:'https://ne1779133027314.my.salesforce-scrt.com'});
-                        } catch (err) { console.error('Error loading Embedded Messaging: ', err); }
-                    };
-                </script>
-                <script type='text/javascript' src='https://ne1779133027314.my.site.com/ESWFDG1779356092251/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
             </div>
             <div class="sidebar">
                 <div class="sidebar-block">
@@ -323,5 +314,25 @@
 <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
 </script>
+
+<script type='text/javascript'>
+    function initEmbeddedMessaging() {
+        try {
+            embeddedservice_bootstrap.settings.language = 'nl';
+            embeddedservice_bootstrap.init(
+                '00Dbm00000jXRSX',
+                'FDG',
+                'https://ne1779133027314.my.site.com/ESWFDG1779356092251',
+                { scrt2URL: 'https://ne1779133027314.my.salesforce-scrt.com' }
+            );
+        } catch (err) {
+            console.error('Error loading Embedded Messaging: ', err);
+        }
+    };
+</script>
+<script type='text/javascript'
+    src='https://ne1779133027314.my.site.com/ESWFDG1779356092251/assets/js/bootstrap.min.js'
+    onload='initEmbeddedMessaging()'></script>
+
 </body>
 </html>
