@@ -1,245 +1,327 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
-
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1">
     <title>FD Business Agent | FD Mediagroep</title>
-    <meta name="description" content="FD Mediagroep Business Solutions - Interact with our AI Agent">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            gold: '#DFAC73',
-                            blue: '#1e3a5f',
-                            dark: '#0f172a',
-                            light: '#f8fafc'
-                        }
-                    },
-                    fontFamily: {
-                        sans: ['Inter', 'system-ui', 'sans-serif'],
-                        serif: ['Merriweather', 'serif']
-                    }
-                }
-            }
-        }
-    </script>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:wght@400;600;700&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --navy: #1e3a5f;
+            --blue-mid: #2c5282;
+            --blue-bg: #eaf1f8;
+            --blue-light: #dce8f3;
+            --white: #ffffff;
+            --text: #1a1a2e;
+            --text-muted: #4a5568;
+            --border: #c8d9e8;
+            --accent: #1e3a5f;
         }
+        body { font-family: 'Source Sans 3', sans-serif; background: var(--white); color: var(--text); line-height: 1.6; }
 
-        h1,
-        h2,
-        h3,
-        .font-serif {
-            font-family: 'Merriweather', serif;
+        /* HEADER */
+        header { background: var(--navy); padding: 0 48px; }
+        .header-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; height: 64px; gap: 48px; }
+        .logo-block { display: flex; align-items: center; gap: 0; text-decoration: none; flex-shrink: 0; }
+        .logo-mark {
+            width: 44px; height: 44px; background: var(--navy);
+            border: 2px solid rgba(255,255,255,0.85);
+            display: flex; align-items: center; justify-content: center;
         }
+        .logo-mark svg { width: 26px; height: 26px; }
+        nav { display: flex; align-items: center; gap: 0; flex: 1; }
+        nav a {
+            color: rgba(255,255,255,0.9); text-decoration: none; font-size: 14px;
+            font-weight: 500; padding: 0 20px; height: 64px; display: flex; align-items: center;
+            transition: background 0.15s; letter-spacing: 0.01em;
+        }
+        nav a:hover { background: rgba(255,255,255,0.1); }
+        nav a.active { background: rgba(255,255,255,0.12); }
 
-        /* Agentforce Placeholder Styling */
-        #salesforce-agent-container {
-            min-height: 500px;
-            box-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.1);
-            position: relative;
+        /* HERO */
+        .hero { background: var(--blue-bg); padding: 64px 48px 72px; border-bottom: 1px solid var(--border); }
+        .hero-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center; }
+        .hero h1 { font-family: 'Source Serif 4', serif; font-size: 42px; font-weight: 700; color: var(--text); line-height: 1.2; margin-bottom: 20px; }
+        .hero p { font-size: 16px; color: var(--text-muted); line-height: 1.75; margin-bottom: 32px; font-weight: 300; }
+        .btn-primary {
+            display: inline-block; background: var(--navy); color: #fff;
+            padding: 12px 28px; font-size: 14px; font-weight: 600;
+            text-decoration: none; letter-spacing: 0.02em;
+            transition: background 0.2s;
         }
+        .btn-primary:hover { background: var(--blue-mid); }
 
-        /* Optional styles if the agent is a floating widget */
-        .embeddedServiceHelpButton .helpButton .uiButton {
-            background-color: #DFAC73 !important;
-            font-family: 'Inter', sans-serif !important;
-        }
+        /* Chat card in hero */
+        .chat-card { background: var(--white); border: 1px solid var(--border); box-shadow: 0 4px 24px rgba(30,58,95,0.08); overflow: hidden; }
+        .chat-card-header { background: var(--navy); padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
+        .chat-avatar { width: 34px; height: 34px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .chat-avatar svg { width: 18px; height: 18px; stroke: #fff; fill: none; }
+        .chat-header-info .chat-name { font-size: 14px; font-weight: 600; color: #fff; }
+        .chat-header-info .chat-status { font-size: 11px; color: rgba(255,255,255,0.65); display: flex; align-items: center; gap: 5px; }
+        .status-dot { width: 6px; height: 6px; background: #68d391; border-radius: 50%; }
+        .chat-body { padding: 24px 20px; display: flex; flex-direction: column; gap: 12px; background: #f7fafc; }
+        .msg-agent { background: var(--white); border: 1px solid var(--border); padding: 12px 16px; font-size: 14px; color: var(--text-muted); line-height: 1.6; max-width: 88%; border-radius: 0 8px 8px 8px; }
+        .msg-user { background: var(--navy); color: rgba(255,255,255,0.9); padding: 12px 16px; font-size: 14px; line-height: 1.6; max-width: 80%; align-self: flex-end; border-radius: 8px 0 8px 8px; }
+        .chat-footer { padding: 14px 20px; border-top: 1px solid var(--border); display: flex; gap: 8px; background: var(--white); }
+        .chat-input { flex: 1; border: 1px solid var(--border); padding: 9px 14px; font-size: 13px; font-family: inherit; color: var(--text-muted); background: #f7fafc; outline: none; }
+        .chat-send { background: var(--navy); color: #fff; border: none; padding: 9px 16px; cursor: pointer; font-size: 13px; font-weight: 600; font-family: inherit; transition: background 0.2s; }
+        .chat-send:hover { background: var(--blue-mid); }
+
+        /* DIVIDER */
+        .page-divider { height: 1px; background: var(--border); }
+
+        /* AGENT SECTION */
+        .agent-section { padding: 64px 48px; background: var(--white); }
+        .section-inner { max-width: 1200px; margin: 0 auto; }
+        .section-header { margin-bottom: 40px; }
+        .section-header h2 { font-family: 'Source Serif 4', serif; font-size: 32px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+        .section-header p { font-size: 16px; color: var(--text-muted); font-weight: 300; max-width: 520px; line-height: 1.7; }
+        .agent-grid { display: grid; grid-template-columns: 1fr 280px; gap: 32px; align-items: start; }
+        .agent-embed-area { background: var(--blue-bg); border: 1px solid var(--border); min-height: 500px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
+        .agent-embed-inner { text-align: center; padding: 48px; }
+        .embed-icon { width: 52px; height: 52px; background: var(--navy); display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+        .embed-icon svg { width: 24px; height: 24px; stroke: #fff; fill: none; }
+        .agent-embed-inner h4 { font-family: 'Source Serif 4', serif; font-size: 18px; color: var(--text); margin-bottom: 8px; }
+        .agent-embed-inner p { font-size: 14px; color: var(--text-muted); line-height: 1.6; }
+
+        /* Sidebar */
+        .sidebar { display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-block { background: var(--blue-bg); border: 1px solid var(--border); padding: 22px; }
+        .sidebar-block h5 { font-family: 'Source Serif 4', serif; font-size: 15px; font-weight: 600; color: var(--navy); margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+        .feature-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .feature-list li { font-size: 13px; color: var(--text-muted); display: flex; align-items: flex-start; gap: 8px; line-height: 1.5; }
+        .feature-list li::before { content: '›'; color: var(--navy); font-weight: 700; font-size: 15px; line-height: 1.3; flex-shrink: 0; }
+        .info-row { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+        .info-row svg { width: 16px; height: 16px; stroke: var(--navy); fill: none; flex-shrink: 0; margin-top: 1px; }
+
+        /* LABELS BAR */
+        .labels-bar { background: var(--blue-light); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); padding: 20px 48px; }
+        .labels-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+        .labels-title { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 600; flex-shrink: 0; white-space: nowrap; }
+        .labels-sep { width: 1px; height: 24px; background: var(--border); flex-shrink: 0; }
+        .labels-list { display: flex; gap: 28px; flex-wrap: wrap; }
+        .label-item { font-size: 13px; color: var(--text-muted); font-style: italic; font-family: 'Source Serif 4', serif; transition: color 0.2s; cursor: default; }
+        .label-item:hover { color: var(--navy); }
+
+        /* FOOTER */
+        footer { background: var(--navy); padding: 48px 48px 28px; }
+        .footer-inner { max-width: 1200px; margin: 0 auto; }
+        .footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 36px; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 24px; }
+        .footer-logo { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+        .footer-logo-mark { width: 36px; height: 36px; border: 1.5px solid rgba(255,255,255,0.5); display: flex; align-items: center; justify-content: center; }
+        .footer-logo-mark svg { width: 20px; height: 20px; }
+        .footer-brand-name { font-family: 'Source Serif 4', serif; font-size: 16px; font-weight: 700; color: #fff; }
+        .footer-brand p { font-size: 13px; color: rgba(255,255,255,0.45); line-height: 1.7; font-weight: 300; max-width: 240px; }
+        .footer-col h6 { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); font-weight: 600; margin-bottom: 16px; }
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 9px; }
+        .footer-col ul li a { color: rgba(255,255,255,0.55); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+        .footer-col ul li a:hover { color: #fff; }
+        .footer-bottom { display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom p { font-size: 12px; color: rgba(255,255,255,0.3); }
+        .footer-links { display: flex; gap: 20px; }
+        .footer-links a { font-size: 12px; color: rgba(255,255,255,0.3); text-decoration: none; transition: color 0.2s; }
+        .footer-links a:hover { color: rgba(255,255,255,0.7); }
     </style>
 </head>
+<body>
 
-<body class="bg-brand-light text-brand-dark antialiased flex flex-col min-h-screen">
+<!-- Header -->
+<header>
+    <div class="header-inner">
+        <a href="#" class="logo-block">
+            <div class="logo-mark">
+                <svg viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="2" y="2" width="10" height="10" fill="white"/>
+                    <rect x="14" y="2" width="10" height="4" fill="white"/>
+                    <rect x="14" y="8" width="6" height="4" fill="white"/>
+                    <rect x="2" y="14" width="10" height="4" fill="white"/>
+                    <rect x="2" y="20" width="10" height="4" fill="white"/>
+                    <rect x="14" y="14" width="10" height="10" fill="white"/>
+                </svg>
+            </div>
+        </a>
+        <nav>
+            <a href="#" class="active">Home</a>
+            <a href="#">Producten</a>
+            <a href="#">Over ons</a>
+            <a href="#">Onze labels</a>
+            <a href="#">Wat krijg je van ons</a>
+            <a href="#">Contact</a>
+        </nav>
+    </div>
+</header>
 
-    <!-- Header -->
-    <header class="bg-brand-blue text-white sticky top-0 z-50 shadow-md">
-        <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-4">
-                <div class="w-10 h-10 bg-brand-gold rounded flex items-center justify-center shrink-0 shadow-sm">
-                    <span class="text-brand-blue text-lg font-black tracking-tighter">FD</span>
+<!-- Hero -->
+<section class="hero">
+    <div class="hero-inner">
+        <div>
+            <h1>Welkom bij de FD Business Agent</h1>
+            <p>FD Business is de toonaangevende B2B-uitgeverij van de FD Mediagroep. Met onze AI-agent helpen wij u snel en persoonlijk verder — van abonnementsvragen tot het inplannen van een afspraak met een van onze adviseurs.</p>
+            <a href="#agent-section" class="btn-primary">Start een gesprek</a>
+        </div>
+        <div class="chat-card">
+            <div class="chat-card-header">
+                <div class="chat-avatar">
+                    <svg viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
                 </div>
-                <div>
-                    <h1 class="text-xl font-bold tracking-tight font-serif leading-none">FD Mediagroep</h1>
-                    <p class="text-xs text-brand-gold mt-1 font-medium tracking-wide uppercase">Business Solutions</p>
+                <div class="chat-header-info">
+                    <div class="chat-name">FD Business Agent</div>
+                    <div class="chat-status"><span class="status-dot"></span> Online beschikbaar</div>
                 </div>
             </div>
-            <nav class="hidden md:flex gap-6 text-sm font-medium">
-                <a href="#" class="hover:text-brand-gold transition-colors">Home</a>
-                <a href="#" class="hover:text-brand-gold transition-colors">Products</a>
-                <a href="#" class="hover:text-brand-gold transition-colors">Support</a>
-            </nav>
-        </div>
-    </header>
-
-    <!-- Hero Section -->
-    <section class="relative bg-brand-blue text-white overflow-hidden py-20 lg:py-32">
-        <!-- Subtle background pattern -->
-        <div class="absolute inset-0 opacity-10">
-            <svg class="h-full w-full" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <polygon fill="currentColor" points="0,100 100,0 100,100" />
-            </svg>
-        </div>
-
-        <div class="max-w-6xl mx-auto px-6 relative z-10 grid md:grid-cols-2 gap-12 items-center">
-            <div>
-                <span
-                    class="inline-block py-1 px-3 rounded-full bg-brand-gold/20 text-brand-gold text-xs font-semibold tracking-wider mb-6 border border-brand-gold/30">AI-Powered</span>
-                <h2 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">Meet Your FD Business Agent</h2>
-                <p class="text-lg text-blue-100 mb-8 font-light leading-relaxed">
-                    Experience seamless support and tailored business insights. Our Salesforce-powered AI agent is here
-                    to assist you with your FD Business accounts, subscriptions, and corporate services.
-                </p>
-                <div class="flex gap-4">
-                    <a href="#agent-section"
-                        class="bg-brand-gold text-brand-blue px-6 py-3 rounded-md font-semibold hover:bg-opacity-90 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
-                        Chat with Agent
-                    </a>
-                </div>
+            <div class="chat-body">
+                <div class="msg-agent">Goedemiddag! Ik ben de FD Business Agent. Waarmee kan ik u vandaag helpen?</div>
+                <div class="msg-user">Ik wil graag een afspraak inplannen.</div>
+                <div class="msg-agent">Natuurlijk! Mag ik uw naam en e-mailadres, en wanneer zou u beschikbaar zijn?</div>
             </div>
+            <div class="chat-footer">
+                <input class="chat-input" type="text" placeholder="Stel uw vraag...">
+                <button class="chat-send">Verstuur</button>
+            </div>
+        </div>
+    </div>
+</section>
 
-            <div class="hidden md:block relative">
-                <!-- Decorative glow -->
-                <div class="absolute -inset-1 bg-gradient-to-r from-brand-gold to-blue-400 rounded-2xl blur opacity-30">
+<div class="page-divider"></div>
+
+<!-- Agent Section -->
+<section class="agent-section" id="agent-section">
+    <div class="section-inner">
+        <div class="section-header">
+            <h2>Hoe kunnen wij u helpen?</h2>
+            <p>Onze agent staat voor u klaar voor directe ondersteuning bij FD Business producten, abonnementen en zakelijke diensten.</p>
+        </div>
+        <div class="agent-grid">
+            <div class="agent-embed-area">
+                <div class="agent-embed-inner">
+                    <div class="embed-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                    </div>
+                    <h4>Agent actief</h4>
+                    <p>De FD Business Agent is beschikbaar via de chatknop rechtsonder in uw scherm.</p>
                 </div>
 
-                <!-- Mockup of Agent -->
-                <div
-                    class="relative bg-[#0f172a]/80 backdrop-blur-sm border border-white/10 rounded-2xl p-6 shadow-2xl">
-                    <div class="flex items-center gap-3 border-b border-white/10 pb-4 mb-4">
-                        <div
-                            class="w-8 h-8 rounded-full bg-brand-gold flex items-center justify-center text-brand-blue font-bold text-xs">
-                            AI</div>
-                        <div>
-                            <p class="text-sm font-semibold">FD Assistant</p>
-                            <p class="text-xs text-blue-300">Online</p>
+                <script type='text/javascript'>
+                    function initEmbeddedMessaging() {
+                        try {
+                            embeddedservice_bootstrap.settings.language = 'nl';
+                            embeddedservice_bootstrap.init('00Dbm00000jXRSX','FDG','https://ne1779133027314.my.site.com/ESWFDG1779356092251',{scrt2URL:'https://ne1779133027314.my.salesforce-scrt.com'});
+                        } catch (err) { console.error('Error loading Embedded Messaging: ', err); }
+                    };
+                </script>
+                <script type='text/javascript' src='https://ne1779133027314.my.site.com/ESWFDG1779356092251/assets/js/bootstrap.min.js' onload='initEmbeddedMessaging()'></script>
+            </div>
+            <div class="sidebar">
+                <div class="sidebar-block">
+                    <h5>Waarmee kan ik helpen?</h5>
+                    <ul class="feature-list">
+                        <li>Afspraak inplannen met een adviseur</li>
+                        <li>Informatie over zakelijke abonnementen</li>
+                        <li>Accountbeheer en factuurvragen</li>
+                        <li>Corporate pakketten en tarieven</li>
+                        <li>Toegang tot premium nieuwsdiensten</li>
+                    </ul>
+                </div>
+                <div class="sidebar-block">
+                    <h5>Praktische informatie</h5>
+                    <div style="display:flex;flex-direction:column;gap:12px;">
+                        <div class="info-row">
+                            <svg viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span>Beschikbaar ma–vr, 08:00–18:00 uur</span>
+                        </div>
+                        <div class="info-row">
+                            <svg viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
+                            <span>Gegevens vertrouwelijk conform AVG</span>
+                        </div>
+                        <div class="info-row">
+                            <svg viewBox="0 0 24 24" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
+                            <span>Prins Bernhardplein 173, Amsterdam</span>
                         </div>
                     </div>
-                    <div class="space-y-4">
-                        <div
-                            class="bg-white/5 rounded-lg p-3 text-sm rounded-tl-none inline-block max-w-[85%] leading-relaxed">
-                            Hello! I am your FD Business Agent. How can I help you manage your corporate subscriptions
-                            or find the latest financial news today?
-                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Labels bar -->
+<div class="labels-bar">
+    <div class="labels-inner">
+        <span class="labels-title">Onze labels</span>
+        <div class="labels-sep"></div>
+        <div class="labels-list">
+            <span class="label-item">Pensioen Pro</span>
+            <span class="label-item">Energeia</span>
+            <span class="label-item">Impact Investor</span>
+            <span class="label-item">PropertyNL</span>
+            <span class="label-item">IPE</span>
+            <span class="label-item">Investment Officer</span>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-inner">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <div class="footer-logo">
+                    <div class="footer-logo-mark">
+                        <svg viewBox="0 0 26 26" fill="none">
+                            <rect x="2" y="2" width="10" height="10" fill="white"/>
+                            <rect x="14" y="2" width="10" height="4" fill="white"/>
+                            <rect x="14" y="8" width="6" height="4" fill="white"/>
+                            <rect x="2" y="14" width="10" height="4" fill="white"/>
+                            <rect x="2" y="20" width="10" height="4" fill="white"/>
+                            <rect x="14" y="14" width="10" height="10" fill="white"/>
+                        </svg>
                     </div>
+                    <span class="footer-brand-name">FD Business</span>
                 </div>
+                <p>De toonaangevende B2B-uitgeverij van Nederland. Onmisbare informatie voor zakelijke beslissers.</p>
             </div>
-        </div>
-    </section>
-
-    <!-- Main Content / Agent Hosting Area -->
-    <main id="agent-section" class="flex-grow max-w-6xl mx-auto w-full px-6 py-20">
-        <div class="text-center mb-12">
-            <h3 class="text-3xl font-bold text-brand-dark mb-4">How can we help?</h3>
-            <p class="text-slate-600 max-w-2xl mx-auto text-lg">
-                Interact with the agent below to get instant answers regarding FD Business packages, account
-                administration, and premium news access.
-            </p>
-        </div>
-
-        <div class="bg-white rounded-2xl p-6 md:p-8 max-w-4xl mx-auto border border-slate-200"
-            id="salesforce-agent-container">
-
-
-
-
-            <div
-                class="h-full flex flex-col items-center justify-center text-center py-20 border border-slate-200 rounded-xl bg-slate-50">
-                <div
-                    class="w-16 h-16 bg-brand-gold/20 text-brand-gold rounded-full flex items-center justify-center mb-5">
-                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                            d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z">
-                        </path>
-                    </svg>
-                </div>
-                <h4 class="text-xl font-semibold text-slate-800 mb-2">Agent is Active</h4>
-                <p class="text-sm text-slate-500 max-w-md mx-auto mb-6">
-                    The Salesforce Agent is successfully embedded! Look for the chat button in the bottom right corner
-                    of your screen to start interacting.
-                </p>
-            </div>
-
-            <!-- Salesforce Agentforce / MIAW Snippet -->
-            <script type='text/javascript'>
-                function initEmbeddedMessaging() {
-                    try {
-                        embeddedservice_bootstrap.settings.language = 'en_US'; // For example, enter 'en' or 'en-US'
-
-                        embeddedservice_bootstrap.init(
-                            '00Dbm00000jXRSX',
-                            'FDG',
-                            'https://ne1779133027314.my.site.com/ESWFDG1779356092251',
-                            {
-                                scrt2URL: 'https://ne1779133027314.my.salesforce-scrt.com'
-                            }
-                        );
-                    } catch (err) {
-                        console.error('Error loading Embedded Messaging: ', err);
-                    }
-                };
-            </script>
-            <script type='text/javascript'
-                src='https://ne1779133027314.my.site.com/ESWFDG1779356092251/assets/js/bootstrap.min.js'
-                onload='initEmbeddedMessaging()'></script>
-
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-brand-dark text-slate-400 py-12 border-t border-slate-800">
-        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-3 gap-8">
-            <div>
-                <div class="flex items-center gap-3 mb-4">
-                    <div class="w-8 h-8 bg-brand-gold rounded flex items-center justify-center shrink-0">
-                        <span class="text-brand-dark text-sm font-black tracking-tighter">FD</span>
-                    </div>
-                    <span class="text-white font-bold font-serif">FD Mediagroep</span>
-                </div>
-                <p class="text-sm leading-relaxed">
-                    Providing high-end, reliable information to business professionals. The trusted source for financial
-                    and economic news.
-                </p>
-            </div>
-            <div>
-                <h4 class="text-white font-semibold mb-4">Brands</h4>
-                <ul class="space-y-2 text-sm">
-                    <li><a href="#" class="hover:text-brand-gold transition">Het Financieele Dagblad</a></li>
-                    <li><a href="#" class="hover:text-brand-gold transition">BNR Nieuwsradio</a></li>
-                    <li><a href="#" class="hover:text-brand-gold transition">Company Info</a></li>
+            <div class="footer-col">
+                <h6>Producten</h6>
+                <ul>
+                    <li><a href="#">Zakelijk abonnement</a></li>
+                    <li><a href="#">Corporate pakket</a></li>
+                    <li><a href="#">Premium toegang</a></li>
+                    <li><a href="#">API &amp; data</a></li>
                 </ul>
             </div>
-            <div>
-                <h4 class="text-white font-semibold mb-4">Contact</h4>
-                <ul class="space-y-2 text-sm">
-                    <li>Prins Bernhardplein 173</li>
-                    <li>1097 BL Amsterdam</li>
-                    <li>The Netherlands</li>
+            <div class="footer-col">
+                <h6>Organisatie</h6>
+                <ul>
+                    <li><a href="#">Over FD Business</a></li>
+                    <li><a href="#">Onze labels</a></li>
+                    <li><a href="#">Werken bij</a></li>
+                    <li><a href="#">Nieuws</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h6>Contact</h6>
+                <ul>
+                    <li><a href="#">Prins Bernhardplein 173</a></li>
+                    <li><a href="#">1097 BL Amsterdam</a></li>
+                    <li><a href="#">info@fdbusiness.nl</a></li>
                 </ul>
             </div>
         </div>
-        <div
-            class="max-w-6xl mx-auto px-6 mt-12 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center gap-4 text-xs">
-            <div>&copy; <span id="year"></span> FD Mediagroep. All rights reserved. Demo environment.</div>
-            <div class="flex gap-4">
-                <a href="#" class="hover:text-white transition">Privacy Policy</a>
-                <a href="#" class="hover:text-white transition">Terms of Service</a>
+        <div class="footer-bottom">
+            <p>&copy; <span id="footer-year"></span> FD Mediagroep. Alle rechten voorbehouden. Demo omgeving.</p>
+            <div class="footer-links">
+                <a href="#">Privacybeleid</a>
+                <a href="#">Disclaimer</a>
+                <a href="#">Cookies</a>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
 
-    <script>
-        // Set current year in footer
-        document.getElementById('year').textContent = new Date().getFullYear();
-    </script>
+<script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+</script>
 </body>
-
 </html>
